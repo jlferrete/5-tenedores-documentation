@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-elements";
 
+import PreLoader from './app/components/PreLoader';
+
 import t from "tcomb-form-native";
 const Form = t.form.Form;
 import { LoginStruct, LoginOptions } from "./app/components/forms/testForm";
@@ -17,12 +19,20 @@ export default class App extends React.Component {
         user: "",
         password: ""
       },
-      testFormError: ""
+      testFormError: "",
+      loaded: false
     };
-
   }
 
-  onChange = (testFormValue) => {
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        loaded: true
+      });
+    }, 2000);
+  }
+
+  onChange = testFormValue => {
     this.setState({
       testFormValue
     });
@@ -49,25 +59,29 @@ export default class App extends React.Component {
 
   render() {
 
-    const { testFormValue, testFormError } = this.state;
+    const { testFormValue, testFormError, loaded } = this.state;
 
-    return (
-      <View style={styles.container}>
-        <Form
-          ref="formTest"
-          type={LoginStruct}
-          options={LoginOptions}
-          value={testFormValue}
-          onChange={v => this.onChange(v)}
-        />
-        <Button
-          title="Login"
-          onPress={this.sendFormTest.bind(this)} />
+    if (!loaded) {
+      return (<PreLoader />)
+    } else {
+      return (
+        <View style={styles.container}>
+          <Form
+            ref="formTest"
+            type={LoginStruct}
+            options={LoginOptions}
+            value={testFormValue}
+            onChange={v => this.onChange(v)}
+          />
+          <Button
+            title="Login"
+            onPress={this.sendFormTest.bind(this)} />
 
-        <Text style={styles.testFormErrorText}>{testFormError}</Text>
+          <Text style={styles.testFormErrorText}>{testFormError}</Text>
 
-      </View>
-    );
+        </View>
+      );
+    }
   }
 }
 
