@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button, Avatar } from "react-native-elements";
+import { StyleSheet, View } from "react-native";
+import { Button, Text } from "react-native-elements";
 
 import t from "tcomb-form-native";
 const Form = t.form.Form;
@@ -16,7 +16,8 @@ export default class App extends React.Component {
       testFormValue: {
         user: "",
         password: ""
-      }
+      },
+      testFormError: ""
     };
 
   }
@@ -28,12 +29,19 @@ export default class App extends React.Component {
   }
 
   sendFormTest = () => {
+    console.log(this.state);
     const validate = this.refs.formTest.getValue();
 
     if (validate) {
       console.log('Login Correcto');
+      this.setState({
+        testFormError: ""
+      })
     } else {
       console.log('Login Incorrecto');
+      this.setState({
+        testFormError: "Rellena todos los campos"
+      })
     }
 
     // console.log(this.state.testFormValue);
@@ -41,7 +49,7 @@ export default class App extends React.Component {
 
   render() {
 
-    const { testFormValue } = this.state;
+    const { testFormValue, testFormError } = this.state;
 
     return (
       <View style={styles.container}>
@@ -55,6 +63,8 @@ export default class App extends React.Component {
         <Button
           title="Login"
           onPress={this.sendFormTest.bind(this)} />
+
+        <Text style={styles.testFormErrorText}>{testFormError}</Text>
 
       </View>
     );
@@ -70,5 +80,10 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     paddingRight: 40,
 
+  },
+  testFormErrorText: {
+    paddingTop: 30,
+    color: '#f00',
+    textAlign: 'center'
   }
 });
