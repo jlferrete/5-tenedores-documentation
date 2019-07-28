@@ -11,12 +11,12 @@ export default function App() {
     <View style={styles.container}>
       <Avatar
         rounded
-        size='large'
+        size="large"
         source={{
           uri: "https://api.adorable.io/avatars/285/abott@adorable.png"
         }}
       />
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Aplicación abierta</Text>
       <Button
         title="Mi primer Botón"
         onPress={() => this.buttonOnClick("Hola Mundo")}
