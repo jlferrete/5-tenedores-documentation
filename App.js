@@ -2,27 +2,18 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Avatar } from "react-native-elements";
 
-export default function App() {
-  buttonOnClick = value => {
-    console.log("Click en mi primer botón: " + value);
-  };
+import t from "tcomb-form-native";
+const Form = t.form.Form;
+import { LoginStruct, LoginOptions } from "./app/components/forms/testForm";
 
-  return (
-    <View style={styles.container}>
-      <Avatar
-        rounded
-        size="large"
-        source={{
-          uri: "https://api.adorable.io/avatars/285/abott@adorable.png"
-        }}
-      />
-      <Text>Aplicación abierta</Text>
-      <Button
-        title="Mi primer Botón"
-        onPress={() => this.buttonOnClick("Hola Mundo")}
-      />
-    </View>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Form ref="formTest" type={LoginStruct} options={LoginOptions} />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
